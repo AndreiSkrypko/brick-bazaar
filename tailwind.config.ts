@@ -5,6 +5,10 @@ export default {
   content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
   prefix: "",
   theme: {
+    fontFamily: {
+      sans: ['"Nunito"', 'system-ui', 'sans-serif'],
+      display: ['"Fredoka"', '"Nunito"', 'system-ui', 'sans-serif'],
+    },
     container: {
       center: true,
       padding: "2rem",
@@ -56,6 +60,12 @@ export default {
           "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
+        },
+        lego: {
+          blue: "hsl(var(--lego-blue))",
+          "blue-foreground": "hsl(var(--lego-blue-foreground))",
+          green: "hsl(var(--lego-green))",
+          "green-foreground": "hsl(var(--lego-green-foreground))",
         },
       },
       borderRadius: {
