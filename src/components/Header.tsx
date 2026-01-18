@@ -17,12 +17,11 @@ const Header = () => {
             <span className="font-display font-bold text-xl text-foreground">BrickShop</span>
           </div>
 
-          {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-6">
-            <a href="#" className="font-medium text-foreground hover:text-primary transition-colors">Каталог</a>
+            <a href="/" className="font-medium text-foreground hover:text-primary transition-colors">Главная</a>
             <a href="#" className="font-medium text-foreground hover:text-primary transition-colors">Оригинал</a>
             <a href="#" className="font-medium text-foreground hover:text-primary transition-colors">Аналоги</a>
-            <a href="#" className="font-medium text-foreground hover:text-primary transition-colors">Б/У детали</a>
+            <a href="/used-parts" className="font-medium text-foreground hover:text-primary transition-colors">Б/У детали</a>
             <a href="#" className="font-medium text-foreground hover:text-primary transition-colors">Контакты</a>
           </nav>
 
