@@ -2,17 +2,28 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, Filter } from "lucide-react";
-import { useState } from "react";
+import { ShoppingCart, Filter, X } from "lucide-react";
+import { useState, useMemo } from "react";
 
 const categories = [
-  { id: "all", name: "Все детали", count: 847 },
-  { id: "bricks", name: "Кирпичики", count: 312 },
-  { id: "plates", name: "Пластины", count: 198 },
-  { id: "technic", name: "Техник (оси, шестерни)", count: 156 },
-  { id: "special", name: "Специальные", count: 89 },
-  { id: "minifigs", name: "Минифигурки", count: 92 },
+  { id: "all", name: "Все детали" },
+  { id: "bricks", name: "Кирпичики" },
+  { id: "plates", name: "Пластины" },
+  { id: "technic", name: "Техник (оси, шестерни)" },
+  { id: "special", name: "Специальные" },
+  { id: "minifigs", name: "Минифигурки" },
 ];
+
+const colorMap: Record<string, { bg: string; text: string }> = {
+  "Красный": { bg: "bg-red-500", text: "text-white" },
+  "Синий": { bg: "bg-blue-500", text: "text-white" },
+  "Белый": { bg: "bg-white border border-border", text: "text-foreground" },
+  "Жёлтый": { bg: "bg-yellow-400", text: "text-black" },
+  "Серый": { bg: "bg-gray-400", text: "text-white" },
+  "Зелёный": { bg: "bg-green-500", text: "text-white" },
+  "Чёрный": { bg: "bg-black", text: "text-white" },
+  "Коричневый": { bg: "bg-amber-700", text: "text-white" },
+};
 
 const parts = [
   // Кирпичики
@@ -21,11 +32,14 @@ const parts = [
   { id: 3, name: "Кирпичик 1x2", category: "bricks", color: "Белый", price: 8, qty: 120, size: "1x2", image: "⬜" },
   { id: 4, name: "Кирпичик 1x4", category: "bricks", color: "Жёлтый", price: 12, qty: 34, size: "1x4", image: "🟨" },
   { id: 5, name: "Кирпичик 2x6", category: "bricks", color: "Серый", price: 20, qty: 22, size: "2x6", image: "⬜" },
+  { id: 21, name: "Кирпичик 2x4", category: "bricks", color: "Синий", price: 15, qty: 38, size: "2x4", image: "🟦" },
+  { id: 22, name: "Кирпичик 1x1", category: "bricks", color: "Красный", price: 5, qty: 95, size: "1x1", image: "🟥" },
   
   // Пластины
   { id: 6, name: "Пластина 4x8", category: "plates", color: "Зелёный", price: 25, qty: 18, size: "4x8", image: "🟩" },
   { id: 7, name: "Пластина 2x4", category: "plates", color: "Чёрный", price: 12, qty: 45, size: "2x4", image: "⬛" },
   { id: 8, name: "Пластина 6x12", category: "plates", color: "Серый", price: 45, qty: 8, size: "6x12", image: "🔲" },
+  { id: 23, name: "Пластина 4x4", category: "plates", color: "Красный", price: 18, qty: 24, size: "4x4", image: "🟥" },
   
   // Техник
   { id: 9, name: "Ось 4L", category: "technic", color: "Чёрный", price: 8, qty: 56, size: "4 шипа", image: "➖" },
@@ -48,10 +62,33 @@ const parts = [
 
 const UsedParts = () => {
   const [activeCategory, setActiveCategory] = useState("all");
+  const [activeColor, setActiveColor] = useState<string | null>(null);
 
-  const filteredParts = activeCategory === "all" 
-    ? parts 
-    : parts.filter(p => p.category === activeCategory);
+  // Подсчёт по категориям с учётом фильтра цвета
+  const categoryCounts = useMemo(() => {
+    const filtered = activeColor ? parts.filter(p => p.color === activeColor) : parts;
+    const counts: Record<string, number> = { all: filtered.length };
+    categories.slice(1).forEach(cat => {
+      counts[cat.id] = filtered.filter(p => p.category === cat.id).length;
+    });
+    return counts;
+  }, [activeColor]);
+
+  // Подсчёт по цветам с учётом фильтра категории
+  const colorCounts = useMemo(() => {
+    const filtered = activeCategory === "all" ? parts : parts.filter(p => p.category === activeCategory);
+    const counts: Record<string, number> = {};
+    filtered.forEach(part => {
+      counts[part.color] = (counts[part.color] || 0) + part.qty;
+    });
+    return counts;
+  }, [activeCategory]);
+
+  const filteredParts = parts.filter(p => {
+    const matchCategory = activeCategory === "all" || p.category === activeCategory;
+    const matchColor = !activeColor || p.color === activeColor;
+    return matchCategory && matchColor;
+  });
 
   return (
     <div className="min-h-screen bg-background">
@@ -92,11 +129,43 @@ const UsedParts = () => {
                   >
                     <span className="font-medium">{cat.name}</span>
                     <span className={`text-sm ${activeCategory === cat.id ? "text-primary-foreground/80" : "text-muted-foreground"}`}>
-                      {cat.count}
+                      {categoryCounts[cat.id] || 0}
                     </span>
                   </button>
                 ))}
               </nav>
+
+              {/* Фильтр по цвету */}
+              <div className="mt-6">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="font-display font-bold text-sm">По цвету</h3>
+                  {activeColor && (
+                    <button 
+                      onClick={() => setActiveColor(null)}
+                      className="text-xs text-primary hover:underline flex items-center gap-1"
+                    >
+                      <X className="h-3 w-3" /> Сбросить
+                    </button>
+                  )}
+                </div>
+                <div className="space-y-1.5">
+                  {Object.entries(colorCounts).sort((a, b) => b[1] - a[1]).map(([color, count]) => (
+                    <button
+                      key={color}
+                      onClick={() => setActiveColor(activeColor === color ? null : color)}
+                      className={`w-full flex items-center gap-2 px-2 py-1.5 rounded-lg transition-colors ${
+                        activeColor === color 
+                          ? "bg-secondary ring-2 ring-primary" 
+                          : "hover:bg-secondary/50"
+                      }`}
+                    >
+                      <span className={`w-5 h-5 rounded ${colorMap[color]?.bg || "bg-gray-300"}`} />
+                      <span className="text-sm font-medium flex-1 text-left">{color}</span>
+                      <span className="text-xs text-muted-foreground">{count} шт</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
               
               {/* Info box */}
               <div className="mt-6 p-4 bg-accent/20 rounded-xl">
