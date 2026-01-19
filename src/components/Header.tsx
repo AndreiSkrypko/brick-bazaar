@@ -19,8 +19,7 @@ const Header = () => {
 
           <nav className="hidden md:flex items-center gap-6">
             <a href="/" className="font-medium text-foreground hover:text-primary transition-colors">Главная</a>
-            <a href="#" className="font-medium text-foreground hover:text-primary transition-colors">Оригинал</a>
-            <a href="#" className="font-medium text-foreground hover:text-primary transition-colors">Аналоги</a>
+            <a href="/new-parts" className="font-medium text-foreground hover:text-primary transition-colors">Новые детали</a>
             <a href="/used-parts" className="font-medium text-foreground hover:text-primary transition-colors">Б/У детали</a>
             <a href="/contacts" className="font-medium text-foreground hover:text-primary transition-colors">Контакты</a>
           </nav>
@@ -51,9 +50,8 @@ const Header = () => {
         {isMenuOpen && (
           <nav className="md:hidden py-4 border-t border-border">
             <div className="flex flex-col gap-3">
-              <a href="#" className="font-medium text-foreground hover:text-primary transition-colors py-2">Каталог</a>
-              <a href="#" className="font-medium text-foreground hover:text-primary transition-colors py-2">Оригинал</a>
-              <a href="#" className="font-medium text-foreground hover:text-primary transition-colors py-2">Аналоги</a>
+              <a href="/" className="font-medium text-foreground hover:text-primary transition-colors py-2">Главная</a>
+              <a href="/new-parts" className="font-medium text-foreground hover:text-primary transition-colors py-2">Новые детали</a>
               <a href="/used-parts" className="font-medium text-foreground hover:text-primary transition-colors py-2">Б/У детали</a>
               <a href="/contacts" className="font-medium text-foreground hover:text-primary transition-colors py-2">Контакты</a>
             </div>
