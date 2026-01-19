@@ -22,7 +22,7 @@ const Header = () => {
             <a href="#" className="font-medium text-foreground hover:text-primary transition-colors">Оригинал</a>
             <a href="#" className="font-medium text-foreground hover:text-primary transition-colors">Аналоги</a>
             <a href="/used-parts" className="font-medium text-foreground hover:text-primary transition-colors">Б/У детали</a>
-            <a href="#" className="font-medium text-foreground hover:text-primary transition-colors">Контакты</a>
+            <a href="/contacts" className="font-medium text-foreground hover:text-primary transition-colors">Контакты</a>
           </nav>
 
           {/* Actions */}
@@ -54,8 +54,8 @@ const Header = () => {
               <a href="#" className="font-medium text-foreground hover:text-primary transition-colors py-2">Каталог</a>
               <a href="#" className="font-medium text-foreground hover:text-primary transition-colors py-2">Оригинал</a>
               <a href="#" className="font-medium text-foreground hover:text-primary transition-colors py-2">Аналоги</a>
-              <a href="#" className="font-medium text-foreground hover:text-primary transition-colors py-2">Б/У детали</a>
-              <a href="#" className="font-medium text-foreground hover:text-primary transition-colors py-2">Контакты</a>
+              <a href="/used-parts" className="font-medium text-foreground hover:text-primary transition-colors py-2">Б/У детали</a>
+              <a href="/contacts" className="font-medium text-foreground hover:text-primary transition-colors py-2">Контакты</a>
             </div>
           </nav>
         )}
