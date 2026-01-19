@@ -25,69 +25,108 @@ const colorMap: Record<string, { bg: string; text: string }> = {
   "Коричневый": { bg: "bg-amber-700", text: "text-white" },
 };
 
+const partTypes = [
+  { id: "all", name: "Все", description: "Все детали" },
+  { id: "original", name: "Оригинал", description: "LEGO®" },
+  { id: "analog", name: "Аналог", description: "Совместимые" },
+];
+
 const parts = [
-  // Кирпичики
-  { id: 1, name: "Кирпичик 2x4", category: "bricks", color: "Красный", price: 15, qty: 48, size: "2x4", image: "🧱" },
-  { id: 2, name: "Кирпичик 2x2", category: "bricks", color: "Синий", price: 10, qty: 65, size: "2x2", image: "🟦" },
-  { id: 3, name: "Кирпичик 1x2", category: "bricks", color: "Белый", price: 8, qty: 120, size: "1x2", image: "⬜" },
-  { id: 4, name: "Кирпичик 1x4", category: "bricks", color: "Жёлтый", price: 12, qty: 34, size: "1x4", image: "🟨" },
-  { id: 5, name: "Кирпичик 2x6", category: "bricks", color: "Серый", price: 20, qty: 22, size: "2x6", image: "⬜" },
-  { id: 21, name: "Кирпичик 2x4", category: "bricks", color: "Синий", price: 15, qty: 38, size: "2x4", image: "🟦" },
-  { id: 22, name: "Кирпичик 1x1", category: "bricks", color: "Красный", price: 5, qty: 95, size: "1x1", image: "🟥" },
+  // Кирпичики - Оригинал
+  { id: 1, name: "Кирпичик 2x4", category: "bricks", type: "original", color: "Красный", price: 15, qty: 48, size: "2x4", image: "🧱" },
+  { id: 2, name: "Кирпичик 2x2", category: "bricks", type: "original", color: "Синий", price: 10, qty: 65, size: "2x2", image: "🟦" },
+  { id: 3, name: "Кирпичик 1x2", category: "bricks", type: "original", color: "Белый", price: 8, qty: 120, size: "1x2", image: "⬜" },
+  { id: 4, name: "Кирпичик 1x4", category: "bricks", type: "original", color: "Жёлтый", price: 12, qty: 34, size: "1x4", image: "🟨" },
+  { id: 5, name: "Кирпичик 2x6", category: "bricks", type: "original", color: "Серый", price: 20, qty: 22, size: "2x6", image: "⬜" },
+  { id: 21, name: "Кирпичик 2x4", category: "bricks", type: "original", color: "Синий", price: 15, qty: 38, size: "2x4", image: "🟦" },
+  { id: 22, name: "Кирпичик 1x1", category: "bricks", type: "original", color: "Красный", price: 5, qty: 95, size: "1x1", image: "🟥" },
+  // Кирпичики - Аналог
+  { id: 101, name: "Кирпичик 2x4", category: "bricks", type: "analog", color: "Красный", price: 8, qty: 80, size: "2x4", image: "🧱" },
+  { id: 102, name: "Кирпичик 2x2", category: "bricks", type: "analog", color: "Синий", price: 5, qty: 100, size: "2x2", image: "🟦" },
+  { id: 103, name: "Кирпичик 1x4", category: "bricks", type: "analog", color: "Жёлтый", price: 6, qty: 55, size: "1x4", image: "🟨" },
   
-  // Пластины
-  { id: 6, name: "Пластина 4x8", category: "plates", color: "Зелёный", price: 25, qty: 18, size: "4x8", image: "🟩" },
-  { id: 7, name: "Пластина 2x4", category: "plates", color: "Чёрный", price: 12, qty: 45, size: "2x4", image: "⬛" },
-  { id: 8, name: "Пластина 6x12", category: "plates", color: "Серый", price: 45, qty: 8, size: "6x12", image: "🔲" },
-  { id: 23, name: "Пластина 4x4", category: "plates", color: "Красный", price: 18, qty: 24, size: "4x4", image: "🟥" },
+  // Пластины - Оригинал
+  { id: 6, name: "Пластина 4x8", category: "plates", type: "original", color: "Зелёный", price: 25, qty: 18, size: "4x8", image: "🟩" },
+  { id: 7, name: "Пластина 2x4", category: "plates", type: "original", color: "Чёрный", price: 12, qty: 45, size: "2x4", image: "⬛" },
+  { id: 8, name: "Пластина 6x12", category: "plates", type: "original", color: "Серый", price: 45, qty: 8, size: "6x12", image: "🔲" },
+  { id: 23, name: "Пластина 4x4", category: "plates", type: "original", color: "Красный", price: 18, qty: 24, size: "4x4", image: "🟥" },
+  // Пластины - Аналог
+  { id: 104, name: "Пластина 4x8", category: "plates", type: "analog", color: "Зелёный", price: 12, qty: 30, size: "4x8", image: "🟩" },
+  { id: 105, name: "Пластина 6x12", category: "plates", type: "analog", color: "Серый", price: 22, qty: 15, size: "6x12", image: "🔲" },
   
-  // Техник
-  { id: 9, name: "Ось 4L", category: "technic", color: "Чёрный", price: 8, qty: 56, size: "4 шипа", image: "➖" },
-  { id: 10, name: "Ось 8L", category: "technic", color: "Чёрный", price: 12, qty: 34, size: "8 шипов", image: "➖" },
-  { id: 11, name: "Шестерня 24 зуба", category: "technic", color: "Серый", price: 35, qty: 12, size: "24z", image: "⚙️" },
-  { id: 12, name: "Коннектор угловой", category: "technic", color: "Серый", price: 15, qty: 28, size: "90°", image: "🔗" },
-  { id: 13, name: "Шестерня 8 зубов", category: "technic", color: "Серый", price: 18, qty: 40, size: "8z", image: "⚙️" },
-  { id: 14, name: "Ось с стопором", category: "technic", color: "Красный", price: 10, qty: 22, size: "2L", image: "🔴" },
+  // Техник - Оригинал
+  { id: 9, name: "Ось 4L", category: "technic", type: "original", color: "Чёрный", price: 8, qty: 56, size: "4 шипа", image: "➖" },
+  { id: 10, name: "Ось 8L", category: "technic", type: "original", color: "Чёрный", price: 12, qty: 34, size: "8 шипов", image: "➖" },
+  { id: 11, name: "Шестерня 24 зуба", category: "technic", type: "original", color: "Серый", price: 35, qty: 12, size: "24z", image: "⚙️" },
+  { id: 12, name: "Коннектор угловой", category: "technic", type: "original", color: "Серый", price: 15, qty: 28, size: "90°", image: "🔗" },
+  { id: 13, name: "Шестерня 8 зубов", category: "technic", type: "original", color: "Серый", price: 18, qty: 40, size: "8z", image: "⚙️" },
+  { id: 14, name: "Ось с стопором", category: "technic", type: "original", color: "Красный", price: 10, qty: 22, size: "2L", image: "🔴" },
+  // Техник - Аналог
+  { id: 106, name: "Ось 4L", category: "technic", type: "analog", color: "Чёрный", price: 4, qty: 90, size: "4 шипа", image: "➖" },
+  { id: 107, name: "Шестерня 24 зуба", category: "technic", type: "analog", color: "Серый", price: 18, qty: 25, size: "24z", image: "⚙️" },
   
-  // Специальные
-  { id: 15, name: "Скос 45° 2x2", category: "special", color: "Красный", price: 14, qty: 30, size: "2x2", image: "📐" },
-  { id: 16, name: "Арка 1x4", category: "special", color: "Коричневый", price: 18, qty: 15, size: "1x4", image: "🌉" },
-  { id: 17, name: "Окно 1x2x2", category: "special", color: "Белый", price: 22, qty: 19, size: "1x2x2", image: "🪟" },
+  // Специальные - Оригинал
+  { id: 15, name: "Скос 45° 2x2", category: "special", type: "original", color: "Красный", price: 14, qty: 30, size: "2x2", image: "📐" },
+  { id: 16, name: "Арка 1x4", category: "special", type: "original", color: "Коричневый", price: 18, qty: 15, size: "1x4", image: "🌉" },
+  { id: 17, name: "Окно 1x2x2", category: "special", type: "original", color: "Белый", price: 22, qty: 19, size: "1x2x2", image: "🪟" },
+  // Специальные - Аналог
+  { id: 108, name: "Скос 45° 2x2", category: "special", type: "analog", color: "Красный", price: 7, qty: 45, size: "2x2", image: "📐" },
   
-  // Минифигурки
-  { id: 18, name: "Торс рыцаря", category: "minifigs", color: "Серый", price: 45, qty: 5, size: "-", image: "🛡️" },
-  { id: 19, name: "Голова улыбка", category: "minifigs", color: "Жёлтый", price: 25, qty: 14, size: "-", image: "😊" },
-  { id: 20, name: "Ноги синие", category: "minifigs", color: "Синий", price: 20, qty: 22, size: "-", image: "👖" },
+  // Минифигурки - только Оригинал
+  { id: 18, name: "Торс рыцаря", category: "minifigs", type: "original", color: "Серый", price: 45, qty: 5, size: "-", image: "🛡️" },
+  { id: 19, name: "Голова улыбка", category: "minifigs", type: "original", color: "Жёлтый", price: 25, qty: 14, size: "-", image: "😊" },
+  { id: 20, name: "Ноги синие", category: "minifigs", type: "original", color: "Синий", price: 20, qty: 22, size: "-", image: "👖" },
 ];
 
 const UsedParts = () => {
   const [activeCategory, setActiveCategory] = useState("all");
   const [activeColor, setActiveColor] = useState<string | null>(null);
+  const [activeType, setActiveType] = useState("all");
 
-  // Подсчёт по категориям с учётом фильтра цвета
+  // Подсчёт по типам с учётом других фильтров
+  const typeCounts = useMemo(() => {
+    let filtered = parts;
+    if (activeCategory !== "all") filtered = filtered.filter(p => p.category === activeCategory);
+    if (activeColor) filtered = filtered.filter(p => p.color === activeColor);
+    
+    return {
+      all: filtered.length,
+      original: filtered.filter(p => p.type === "original").length,
+      analog: filtered.filter(p => p.type === "analog").length,
+    };
+  }, [activeCategory, activeColor]);
+
+  // Подсчёт по категориям с учётом фильтров
   const categoryCounts = useMemo(() => {
-    const filtered = activeColor ? parts.filter(p => p.color === activeColor) : parts;
+    let filtered = parts;
+    if (activeType !== "all") filtered = filtered.filter(p => p.type === activeType);
+    if (activeColor) filtered = filtered.filter(p => p.color === activeColor);
+    
     const counts: Record<string, number> = { all: filtered.length };
     categories.slice(1).forEach(cat => {
       counts[cat.id] = filtered.filter(p => p.category === cat.id).length;
     });
     return counts;
-  }, [activeColor]);
+  }, [activeColor, activeType]);
 
-  // Подсчёт по цветам с учётом фильтра категории
+  // Подсчёт по цветам с учётом фильтров
   const colorCounts = useMemo(() => {
-    const filtered = activeCategory === "all" ? parts : parts.filter(p => p.category === activeCategory);
+    let filtered = parts;
+    if (activeCategory !== "all") filtered = filtered.filter(p => p.category === activeCategory);
+    if (activeType !== "all") filtered = filtered.filter(p => p.type === activeType);
+    
     const counts: Record<string, number> = {};
     filtered.forEach(part => {
       counts[part.color] = (counts[part.color] || 0) + part.qty;
     });
     return counts;
-  }, [activeCategory]);
+  }, [activeCategory, activeType]);
 
   const filteredParts = parts.filter(p => {
     const matchCategory = activeCategory === "all" || p.category === activeCategory;
     const matchColor = !activeColor || p.color === activeColor;
-    return matchCategory && matchColor;
+    const matchType = activeType === "all" || p.type === activeType;
+    return matchCategory && matchColor && matchType;
   });
 
   return (
@@ -112,28 +151,56 @@ const UsedParts = () => {
           {/* Sidebar */}
           <aside className="lg:w-64 flex-shrink-0">
             <div className="bg-card rounded-2xl shadow-card p-5 sticky top-20">
-              <div className="flex items-center gap-2 mb-4">
-                <Filter className="h-5 w-5 text-primary" />
-                <h2 className="font-display font-bold text-lg">Категории</h2>
+              {/* Фильтр по типу */}
+              <div className="mb-5">
+                <div className="flex items-center gap-2 mb-3">
+                  <Filter className="h-5 w-5 text-primary" />
+                  <h2 className="font-display font-bold text-lg">Тип детали</h2>
+                </div>
+                <div className="flex gap-2 flex-wrap">
+                  {partTypes.map((type) => (
+                    <button
+                      key={type.id}
+                      onClick={() => setActiveType(type.id)}
+                      className={`px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                        activeType === type.id
+                          ? type.id === "original" 
+                            ? "bg-lego-green text-white shadow-md"
+                            : type.id === "analog"
+                            ? "bg-lego-blue text-white shadow-md"
+                            : "bg-primary text-primary-foreground shadow-md"
+                          : "bg-secondary hover:bg-secondary/80 text-foreground"
+                      }`}
+                    >
+                      <span>{type.name}</span>
+                      <span className="ml-1 opacity-70">({typeCounts[type.id as keyof typeof typeCounts]})</span>
+                    </button>
+                  ))}
+                </div>
               </div>
-              <nav className="space-y-1">
-                {categories.map((cat) => (
-                  <button
-                    key={cat.id}
-                    onClick={() => setActiveCategory(cat.id)}
-                    className={`w-full text-left px-3 py-2.5 rounded-lg transition-colors flex justify-between items-center ${
-                      activeCategory === cat.id
-                        ? "bg-primary text-primary-foreground"
-                        : "hover:bg-secondary text-foreground"
-                    }`}
-                  >
-                    <span className="font-medium">{cat.name}</span>
-                    <span className={`text-sm ${activeCategory === cat.id ? "text-primary-foreground/80" : "text-muted-foreground"}`}>
-                      {categoryCounts[cat.id] || 0}
-                    </span>
-                  </button>
-                ))}
-              </nav>
+
+              {/* Категории */}
+              <div className="mb-5">
+                <h3 className="font-display font-bold text-sm mb-3">Категории</h3>
+                <nav className="space-y-1">
+                  {categories.map((cat) => (
+                    <button
+                      key={cat.id}
+                      onClick={() => setActiveCategory(cat.id)}
+                      className={`w-full text-left px-3 py-2.5 rounded-lg transition-colors flex justify-between items-center ${
+                        activeCategory === cat.id
+                          ? "bg-primary text-primary-foreground"
+                          : "hover:bg-secondary text-foreground"
+                      }`}
+                    >
+                      <span className="font-medium">{cat.name}</span>
+                      <span className={`text-sm ${activeCategory === cat.id ? "text-primary-foreground/80" : "text-muted-foreground"}`}>
+                        {categoryCounts[cat.id] || 0}
+                      </span>
+                    </button>
+                  ))}
+                </nav>
+              </div>
 
               {/* Фильтр по цвету */}
               <div className="mt-6">
@@ -183,9 +250,18 @@ const UsedParts = () => {
               <p className="text-muted-foreground">
                 Найдено: <span className="font-bold text-foreground">{filteredParts.length}</span> деталей
               </p>
-              <Badge variant="secondary" className="bg-lego-green/10 text-lego-green">
-                Б/У оригинал
-              </Badge>
+              <div className="flex gap-2">
+                {activeType === "all" || activeType === "original" ? (
+                  <Badge variant="secondary" className="bg-lego-green/10 text-lego-green">
+                    Б/У оригинал
+                  </Badge>
+                ) : null}
+                {activeType === "all" || activeType === "analog" ? (
+                  <Badge variant="secondary" className="bg-lego-blue/10 text-lego-blue">
+                    Б/У аналог
+                  </Badge>
+                ) : null}
+              </div>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -200,7 +276,19 @@ const UsedParts = () => {
                     </span>
                   </div>
                   <div className="p-3">
-                    <p className="text-xs text-muted-foreground mb-1">{part.color} • {part.size}</p>
+                    <div className="flex items-center justify-between mb-1">
+                      <p className="text-xs text-muted-foreground">{part.color} • {part.size}</p>
+                      <Badge 
+                        variant="outline" 
+                        className={`text-[10px] px-1.5 py-0 ${
+                          part.type === "original" 
+                            ? "border-lego-green text-lego-green" 
+                            : "border-lego-blue text-lego-blue"
+                        }`}
+                      >
+                        {part.type === "original" ? "LEGO" : "Аналог"}
+                      </Badge>
+                    </div>
                     <h3 className="font-display font-bold text-sm text-foreground line-clamp-1 mb-2">
                       {part.name}
                     </h3>
