@@ -17,8 +17,8 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 220 20% 10%;
 
-    /* LEGO Red */
-    --primary: 0 100% 45%;
+    /* Primary (was LEGO Red) -> now uses LEGO Blue values */
+    --primary: 205 100% 36%;
     --primary-foreground: 0 0% 100%;
 
     /* Light gray */
@@ -32,20 +32,22 @@ All colors MUST be HSL.
     --accent: 45 100% 50%;
     --accent-foreground: 220 20% 10%;
 
-    /* LEGO Blue */
-    --lego-blue: 205 100% 36%;
+    /* LEGO Blue -> now points to LEGO Green values (blue becomes green) */
+    --lego-blue: 145 70% 35%;
     --lego-blue-foreground: 0 0% 100%;
 
-    /* LEGO Green */
+    /* LEGO Green stays as-is */
     --lego-green: 145 70% 35%;
     --lego-green-foreground: 0 0% 100%;
 
-    --destructive: 0 84% 60%;
+    /* Destructive was red; change to blue hue */
+    --destructive: 205 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
     --border: 45 10% 88%;
     --input: 45 10% 88%;
-    --ring: 0 100% 45%;
+    /* Ring (was red) -> use blue */
+    --ring: 205 100% 36%;
 
     --radius: 0.75rem;
 
