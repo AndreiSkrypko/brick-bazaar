@@ -2,6 +2,14 @@ import { Search, ShoppingCart, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
+// Fallback inline SVG data URI for the logo to ensure it loads in dev
+const logoData = "data:image/svg+xml;utf8," + encodeURIComponent(
+  `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'>
+    <rect width='100%' height='100%' fill='#1E6FF5'/>
+    <text x='50%' y='55%' font-size='320' font-family='Fredoka, Nunito, Arial, Helvetica, sans-serif' font-weight='700' fill='white' text-anchor='middle' dominant-baseline='middle'>B</text>
+  </svg>`
+);
+
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -11,9 +19,9 @@ const Header = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-primary rounded-lg shadow-brick flex items-center justify-center">
-              <span className="text-primary-foreground font-display font-bold text-xl">B</span>
-            </div>
+            <a href="/" className="block w-10 h-10 rounded-lg overflow-hidden shadow-brick">
+              <img src={logoData} alt="BrickShop logo" className="w-full h-full object-cover" />
+            </a>
             <span className="font-display font-bold text-xl text-foreground">BrickShop</span>
           </div>
 
